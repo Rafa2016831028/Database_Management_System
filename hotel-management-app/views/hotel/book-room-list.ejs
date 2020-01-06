@@ -1,0 +1,91 @@
+<%- include('../includes/head.ejs') %>
+<link rel="stylesheet" href="/css/cart.css">
+</head>
+
+<body>
+<%- include('../includes/navigation.ejs') %>
+
+<main>
+
+    <div class="transaction">
+
+        <h2>Your Desired Booked Rooms List, Thank you.</h2>
+
+        <div class="search__type">
+
+            <div class="transaction">
+                <h3>To get booked rooms list for specific month.</h3>
+                <form class="product-form" action="/admin/find-book-room-month" method="POST">
+                    <div class="form-control">
+                        <label for="bookingMonth">Month</label>
+                        <input type="text" name="bookingMonth" id="bookingMonth">
+                    </div>
+                    <div class="form-control">
+                        <label for="bookingYear">Year</label>
+                        <input type="text" name="bookingYear" id="bookingYear">
+                    </div>
+                    <button class="btn" type="submit">Submit</button>
+                </form>
+            </div>
+
+            <div class="transaction">
+                <h3>To get booked rooms list for specific date.</h3>
+                <form class="product-form" action="/admin/find-book-room-date" method="POST">
+                    <div class="form-control">
+                        <label for="bookingDate">Date</label>
+                        <input type="text" name="bookingDate" id="bookingDate">
+                    </div>
+                    <div class="form-control">
+                        <label for="bookingMonth">Month</label>
+                        <input type="text" name="bookingMonth" id="bookingMonth">
+                    </div>
+                    <div class="form-control">
+                        <label for="bookingYear">Year</label>
+                        <input type="text" name="bookingYear" id="bookingYear">
+                    </div>
+                    <button class="btn" type="submit">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <% if (books.length > 0) { %>
+        <ul class="cart__item-list">
+            <% books.forEach(book => { %>
+                <li class="cart__item">
+                    <div>
+                        <h1>Room NO:<%= book.roomNo %></h1>
+                        <p>Booking Date: <%= book.bookingDate %></p>
+                        <p>Booking Month: <%= book.bookingMonth %></p>
+                        <p>Booking Year: <%= book.bookingYear %></p>
+                    </div>
+
+                    <div>
+                        <h2>Customer Name: <%= book.customerName %></h2>
+                        <p>Customer NId: <%= book.customerNId %></p>
+                        <p>Customer Phone: <%= book.customerPhone %></p>
+                        <p>Customer Bill: <%= book.customerBill %></p>
+                        <p>Service Bill: <%= book.customerServiceBill %></p>
+                    </div>
+                    <form action="/admin/cart-delete-book" method="POST">
+                        <input type="hidden" value="<%= book.id %>" name="bookId">
+                        <button class="btn danger" type="submit">Delete</button>
+                    </form>
+                </li>
+            <% }) %>
+        </ul>
+        <hr>
+<!--        <div class="centered">-->
+<!--            <form action="/create-order" method="POST">-->
+<!--                <button type="submit" class="btn">Order Now!</button>-->
+<!--            </form>-->
+<!--        </div>-->
+
+    <% } else { %>
+        <h1>No Rooms Booked yet!</h1>
+    <% } %>
+</main>
+<%- include('../includes/end.ejs') %>
